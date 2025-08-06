@@ -18,7 +18,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta title="Just A Thought" />
+        <title>Just A Thought</title>
         <meta name="description" content="A demo application to hold a series of ramblings" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

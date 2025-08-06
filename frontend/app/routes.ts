@@ -8,13 +8,15 @@ import { index, layout, prefix, type RouteConfig, route } from "@react-router/de
 export default [
     index("routes/home.tsx"),
 
+    route("login", "routes/login.tsx"),
+
     layout("routes/layout.tsx", [
 
         route("dashboard", "routes/dashboard.tsx"),
         route("account", "routes/account.tsx"),
 
         ...prefix("thoughts", [
-            route("all", "routes/all.tsx"),
+            index("routes/all.tsx"),
 
             route(":id", "routes/thought/layout.tsx", [
                 index("routes/thought/view.tsx"),
