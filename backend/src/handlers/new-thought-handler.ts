@@ -1,10 +1,11 @@
 // builtin
 
-import { database } from "../modules/database/index.js";
-
 // external
 
 // internal
+import type { FastifySchema } from "fastify";
+import { database } from "../modules/database/index.js";
+
 
 export interface NewThoughtRequest {
     userId: string;
@@ -19,3 +20,14 @@ export async function handleNewThought(req: NewThoughtRequest): Promise<void> {
         throw process.error;
     }
 }
+
+export const newThoughtSchema: FastifySchema = {
+    body: {
+        type: "object",
+        required: ["userId", "content"],
+        properties: {
+            userId: { type: "string" },
+            content: { type: "string" },
+        }
+    }
+};

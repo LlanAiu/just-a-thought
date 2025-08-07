@@ -5,6 +5,7 @@ import "./bootstrap.js";
 
 // external
 import fastify, { type FastifyInstance } from "fastify";
+import { setupRoutes } from "./routes.js";
 
 // internal
 
@@ -15,9 +16,9 @@ server.get("/", async (req, res) => {
     return { hello: "World!" };
 })
 
-server.get("/ping", async (req, res) => {
-    return "pong";
-});
+setupRoutes(server);
+
+
 
 server.listen({ port: 8080 }, (err, address) => {
     if (err) {
