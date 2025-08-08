@@ -24,10 +24,10 @@ export async function handleNewThought(req: NewThoughtRequest): Promise<void> {
 export const newThoughtSchema: FastifySchema = {
     body: {
         type: "object",
-        required: ["userId", "content"],
+        required: ["userId", "text"],
         properties: {
             userId: { type: "string" },
-            content: { type: "string" },
+            text: { type: "string" },
         }
     }
 };

@@ -5,14 +5,14 @@ import "./bootstrap.js";
 
 // external
 import fastify, { type FastifyInstance } from "fastify";
-import { setupRoutes } from "./routes.js";
 
 // internal
+import { setupRoutes } from "./routes.js";
 
 
 const server: FastifyInstance = fastify();
 
-server.get("/", async (req, res) => {
+server.get("/", async (_req, _res) => {
     return { hello: "World!" };
 })
 

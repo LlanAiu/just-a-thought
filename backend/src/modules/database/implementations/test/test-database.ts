@@ -13,7 +13,7 @@ import { seedThoughts } from "./seed-data.js";
 
 export class TestDatabase implements Database {
     private thoughts: Thought[] = [...seedThoughts];
-    private nextId = 1;
+    private nextId = 4;
 
     async addThought(req: NewThoughtRequest): Promise<Task> {
         const thought: Thought = {
