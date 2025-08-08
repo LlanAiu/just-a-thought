@@ -5,6 +5,7 @@ import { NavLink } from "react-router";
 
 // internal
 
+
 export default function NavigationBar() {
     return (
         <nav>

@@ -1,37 +1,36 @@
 // builtin
 
-import { useState, type ChangeEvent } from "react";
-
 // external
 
 // internal
+import { redirect } from "react-router";
+import TimedTextInput from "~/components/new/timed-text";
+import { postNewThoughtForUser } from "~/lib/thought-actions";
+import { getSessionUserId, isSessionData } from "~/sessions.server";
+import type { Route } from "./+types/new";
 
-export default function NewThought() {
-    const [text, setText] = useState<string>("");
 
-    function handleTextChange(e: ChangeEvent<HTMLTextAreaElement>) {
-        const newText: string = e.target.value;
-        if (allowChange(text, newText)) {
-            setText(s => newText);
-        }
+export async function action({ request }: Route.ActionArgs) {
+    const formData: FormData = await request.formData();
+    const thought: string = formData.get("thought") as string || "";
+    const userId: string = formData.get("userId") as string;
+
+    await postNewThoughtForUser({ userId, text: thought });
+
+    return redirect("/thoughts");
+}
+
+export async function loader({ request }: Route.LoaderArgs) {
+    const data = await getSessionUserId(request);
+
+    if (isSessionData(data)) {
+        return data;
     }
+}
 
-    function allowChange(oldString: string, newString: string): boolean {
-        const sameStart: boolean = newString.startsWith(oldString);
-        const addedChars: boolean = newString.length > oldString.length;
-        return sameStart && addedChars;
-    }
+export default function NewThought({ loaderData }: Route.ComponentProps) {
 
     return (
-        <div>
-            <h1>New Thought</h1>
-
-            <textarea
-                name="thought"
-                value={text}
-                onChange={handleTextChange}
-            />
-
-        </div>
+        <TimedTextInput userId={loaderData?.userId} />
     );
 }

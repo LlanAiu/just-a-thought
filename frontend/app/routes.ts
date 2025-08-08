@@ -5,6 +5,7 @@ import { index, layout, prefix, type RouteConfig, route } from "@react-router/de
 
 // internal
 
+
 export default [
     index("routes/home.tsx"),
 

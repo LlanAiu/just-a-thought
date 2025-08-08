@@ -4,6 +4,7 @@
 
 // internal
 
+
 export interface Thought {
     id: number;
     userId: string;
