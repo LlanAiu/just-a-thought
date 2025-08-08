@@ -3,15 +3,16 @@
 // external
 
 // internal
-import type { Task, Process } from "../../../../globals/types.js";
+import type { Process, Task } from "../../../../globals/types.js";
 import type { DeleteThoughtRequest } from "../../../../handlers/delete-thought-handler.js";
 import type { NewThoughtRequest } from "../../../../handlers/new-thought-handler.js";
 import type { Database } from "../../database.js";
 import type { Thought } from "../../types.js";
+import { seedThoughts } from "./seed-data.js";
 
 
 export class TestDatabase implements Database {
-    private thoughts: Thought[] = [];
+    private thoughts: Thought[] = [...seedThoughts];
     private nextId = 1;
 
     async addThought(req: NewThoughtRequest): Promise<Task> {
