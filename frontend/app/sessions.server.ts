@@ -1,13 +1,16 @@
 // builtin
 
-import { createCookie, createCookieSessionStorage } from "react-router";
-
 // external
+import { createCookie, createCookieSessionStorage, redirect } from "react-router";
 
 // internal
 
-interface SessionData {
+export interface SessionData {
     userId: string;
+}
+
+export const isSessionData = (data: unknown): data is SessionData => {
+    return typeof data === "object" && data !== null && "userId" in data;
 }
 
 interface SessionFlashData {
@@ -28,3 +31,15 @@ const { getSession, commitSession, destroySession } = createCookieSessionStorage
 );
 
 export { getSession, commitSession, destroySession };
+
+export const getSessionUserId = async (request: Request): Promise<Response | SessionData> => {
+    const session = await getSession(request.headers.get("Cookie"));
+
+    const userId = session.get("userId");
+
+    if (!userId) {
+        return redirect("/login");
+    }
+
+    return { userId };
+};
