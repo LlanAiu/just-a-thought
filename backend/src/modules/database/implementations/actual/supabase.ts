@@ -1,7 +1,7 @@
 // builtin
 
 // external
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 // internal
 import type { Database } from "../../database.js";

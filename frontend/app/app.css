@@ -3,6 +3,14 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --primary-color: #eee;
+  --color-primary: white;
+  --secondary-color: white;
+  --color-secondary: black;
+
+  --tertiary-color: turquoise;
+  --quaternary-color: lightblue;
 }
 
 html,
@@ -12,4 +20,20 @@ body {
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.color-primary {
+  color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+.color-secondary {
+  color: var(--color-secondary);
 }

@@ -4,7 +4,7 @@
 import { Outlet } from "react-router";
 
 // internal
-import NavigationBar from "~/components/nav-bar";
+import NavigationBar from "~/components/nav-bar/nav-bar";
 import type { Route } from "./+types/layout";
 import { getSessionUserId } from "~/sessions.server";
 
@@ -16,9 +16,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function BaseLayout() {
 
     return (
-        <div>
+        <div className="flex space-x-3 h-screen">
             <NavigationBar />
-            <Outlet />
+            <div className="flex-auto max-w-3/4 h-full mt-2">
+                <Outlet />
+            </div>
         </div>
     );
 }
