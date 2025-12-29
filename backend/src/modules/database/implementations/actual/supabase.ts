@@ -30,7 +30,7 @@ export class SupabaseDatabase implements Database {
             return { success: false, error };
         }
 
-        return { success: true };
+        return { success: true, data: undefined };
     }
 
     async getThoughtsForUserId(userId: string): Promise<Process<Thought[]>> {
@@ -66,7 +66,7 @@ export class SupabaseDatabase implements Database {
             return { success: false, error };
         }
 
-        return { success: true };
+        return { success: true, data: undefined };
     }
 
 }
