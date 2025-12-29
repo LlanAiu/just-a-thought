@@ -3,6 +3,7 @@
 // external
 
 // internal
+import type { Process } from "../globals/types.js";
 import { database } from "../modules/database/index.js";
 import type { Thought } from "../modules/database/types.js";
 
@@ -11,16 +12,10 @@ export interface GetUserThoughtsRequest {
     userId: string;
 }
 
-export async function handleGetUserThoughts(query: GetUserThoughtsRequest): Promise<Thought[]> {
+export async function handleGetUserThoughts(query: GetUserThoughtsRequest): Promise<Process<Thought[]>> {
     const { userId } = query;
 
-    const process = await database.getThoughtsForUserId(userId);
-
-    if (!process.success) {
-        throw process.error;
-    }
-
-    return process.data;
+    return await database.getThoughtsForUserId(userId);
 }
 
 export const getUserThoughtsSchema = {

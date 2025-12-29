@@ -1,10 +1,11 @@
 // builtin
 
 // external
+import type { FastifySchema } from "fastify";
 
 // internal
-import type { FastifySchema } from "fastify";
 import { database } from "../modules/database/index.js";
+import type { Task } from "../globals/types.js";
 
 
 export interface NewThoughtRequest {
@@ -12,13 +13,8 @@ export interface NewThoughtRequest {
     text: string;
 }
 
-export async function handleNewThought(req: NewThoughtRequest): Promise<void> {
-
-    const process = await database.addThought(req);
-
-    if (!process.success) {
-        throw process.error;
-    }
+export async function handleNewThought(req: NewThoughtRequest): Promise<Task> {
+    return await database.addThought(req);
 }
 
 export const newThoughtSchema: FastifySchema = {

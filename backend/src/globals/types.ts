@@ -9,19 +9,16 @@ export interface BaseReply<T> {
     data?: T,
 }
 
-export interface ProcessSuccess<T> {
+export interface Success<T> {
     success: true;
     data: T;
-}
-
-export interface TaskSuccess {
-    success: true;
 }
 
 export interface Failure {
     success: false;
     error: Error;
+    code?: number;
 }
 
-export type Process<T> = ProcessSuccess<T> | Failure;
-export type Task = TaskSuccess | Failure;
+export type Process<T> = Success<T> | Failure;
+export type Task = Process<void>;

@@ -1,10 +1,11 @@
 // builtin
 
 // external
+import type { FastifySchema } from "fastify";
 
 // internal
-import type { FastifySchema } from "fastify";
 import { database } from "../modules/database/index.js";
+import type { Task } from "../globals/types.js";
 
 
 export interface DeleteThoughtRequest {
@@ -12,13 +13,8 @@ export interface DeleteThoughtRequest {
     thoughtId: number;
 }
 
-export async function handleDeleteThought(req: DeleteThoughtRequest): Promise<void> {
-
-    const process = await database.deleteThought(req);
-
-    if (!process.success) {
-        throw process.error;
-    }
+export async function handleDeleteThought(req: DeleteThoughtRequest): Promise<Task> {
+    return await database.deleteThought(req);
 }
 
 export const deleteThoughtSchema: FastifySchema = {
