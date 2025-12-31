@@ -6,26 +6,36 @@
 import { getAllThoughtsForUser } from "~/lib/thought-actions";
 import { getSessionUserId, isSessionData } from "~/sessions.server";
 import type { Route } from "./+types/all";
+import { useEffect, useState } from "react";
+import type { Thought } from "~/lib/types";
 
 
-export async function loader({ request }: Route.LoaderArgs) {
-    const data = await getSessionUserId(request);
-    if (isSessionData(data)) {
-        const process = await getAllThoughtsForUser(data.userId);
+export default function AllThoughts() {
 
-        if (process.success) {
-            return { data: process.data };
-        }
-        return { data: [], error: process.error };
-    }
-}
 
-export default function AllThoughts({ loaderData }: Route.ComponentProps) {
+
+    const userId = "To be replaced by auth logic";
+    const [thoughts, setThoughts] = useState<Thought[]>([]);
+    const [error, setError] = useState<string>("");
+
+    useEffect(() => {
+        getAllThoughtsForUser(userId).then((reply) => {
+            if (reply.success) {
+                setThoughts(reply.data);
+            } else {
+                setError(reply.message);
+            }
+        })
+    }, [])
+
     return (
         <div>
             <h1>All Thoughts</h1>
             {
-                loaderData?.data.map((thought) => {
+                error && (<div>{error}</div>)
+            }
+            {
+                thoughts.map((thought) => {
                     return <div key={thought.id}>{thought.text}</div>;
                 })
             }

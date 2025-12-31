@@ -3,32 +3,26 @@
 // external
 
 // internal
-import type { BaseReply, Process, Task, Thought } from "./types";
+import type { BaseReply, Task, Thought } from "./types";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 if (!BACKEND_URL) throw new Error("BACKEND URL environment variable is not set!");
 
-export async function getAllThoughtsForUser(userId: string): Promise<Process<Thought[]>> {
+export async function getAllThoughtsForUser(userId: string): Promise<BaseReply<Thought[]>> {
     try {
         const response = await fetch(`${BACKEND_URL}/thoughts?userId=${userId}`);
 
-        if (response.ok) {
-            const json: BaseReply<Thought[]> = await response.json() as BaseReply<Thought[]>;
-            const data = json.data;
-
-            if (!data) {
-                return { success: true, data: [] };
-            }
-
-            return { success: true, data };
-        }
-
-        return { success: false, error: response.statusText };
+        const data: BaseReply<Thought[]> = await response.json() as BaseReply<Thought[]>;
+        return data;
 
     } catch (err) {
         console.log(err);
-        return { success: false, error: `Failed to fetch thought data for user ${userId}` };
+        return {
+            success: false,
+            error: "Faild to fetch",
+            message: `Failed to fetch thought data for user ${userId}`
+        };
     }
 }
 
@@ -37,7 +31,7 @@ interface NewThoughtInput {
     text: string;
 }
 
-export async function postNewThoughtForUser(input: NewThoughtInput): Promise<Task> {
+export async function postNewThoughtForUser(input: NewThoughtInput): Promise<BaseReply<void>> {
     try {
         const response = await fetch(`${BACKEND_URL}/thoughts`, {
             method: "POST",
@@ -46,13 +40,22 @@ export async function postNewThoughtForUser(input: NewThoughtInput): Promise<Tas
         });
 
         if (response.ok) {
-            return { success: true };
+            const data: BaseReply<void> = await response.json() as BaseReply<void>;
+
+            return data;
         }
 
-        return { success: false, error: response.statusText };
+        return {
+            success: false,
+            error: "Failed to fetch",
+            message: response.statusText
+        };
 
     } catch (err) {
-        console.log(err);
-        return { success: false, error: `Failed to upload new thought data for user ${input.userId}` };
+        return {
+            success: false,
+            error: "Faild to fetch",
+            message: `Failed to create new thought with input: ${JSON.stringify(input)}`
+        };
     }
 }
